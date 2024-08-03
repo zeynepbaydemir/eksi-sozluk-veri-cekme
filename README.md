@@ -6,7 +6,7 @@ Bu proje, Selenium ve BeautifulSoup kullanarak Ekşi Sözlük'ten belirli bir ba
 
 1. Proje dizinine gidin ve Python dosyasını çalıştırın:
 ```
-python eksi_sozluk_scraper.py
+python eksi.py
 ```
 
 1. Alternatif olarak, VS Code kullanıyorsanız, dosyayı açtıktan sonra sağ tıklayıp "Run Python File in Terminal" seçeneğini seçerek de çalıştırabilirsiniz.
