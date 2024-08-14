@@ -2,6 +2,8 @@
 
 Bu proje, Selenium ve BeautifulSoup kullanarak Ekşi Sözlük'ten belirli bir başlığın içeriklerini toplamak için hazırlanmıştır. İçerikler CSV dosyasına kaydedilir.
 
+## Belirli bir başlığa ait içerikleri çekmek için:
+
 ## Kullanım
 
 1. Proje dizinine gidin ve Python dosyasını çalıştırın:
@@ -37,3 +39,24 @@ python eksi.py
 - **`User-Agent` Bilgisini Kopyalayın**:
     
     - Kopyaladığınız cURL komutunun içinde `-H 'User-Agent: ...'` kısmını bulun ve bu değeri Python kodunuza ekleyebilirsiniz.
+
+
+
+
+## Bir yazara ait tüm entryleri csv formatında kaydetmek için
+
+## Kullanım
+
+Bir yazara ait tüm entryleri csv formatında kaydetmek için yazar.py kodunu kullanabilirsiniz. 
+Girdiyi @yazaradi şeklinde verdiğinizden emin olun.
+
+1. Proje dizinine gidin ve Python dosyasını çalıştırın:
+```
+python yazar.py
+```
+
+1. Alternatif olarak, VS Code kullanıyorsanız, dosyayı açtıktan sonra sağ tıklayıp "Run Python File in Terminal" seçeneğini seçerek de çalıştırabilirsiniz.
+    
+3. Çalıştırıldığında, sizden bir başlık girmeniz istenecektir. Aramak istediğiniz başlığı girin ve `Enter` tuşuna basın.
+    
+4. Kod, arama sonuçlarını alacak, sayfa sayısını belirleyecek ve her sayfadaki içerikleri toplayarak `eksi_sozluk.csv` dosyasına kaydedecektir.
