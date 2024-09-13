@@ -43,7 +43,7 @@ python eksi.py
 
 
 
-## Bir yazara ait tüm entryleri csv formatında kaydetmek için
+## Bir yazara ait tüm entryleri(başlık, içerik, tarih) csv formatında kaydetmek için
 
 ## Kullanım
 
@@ -59,4 +59,4 @@ python yazar.py
     
 3. Çalıştırıldığında, sizden bir başlık girmeniz istenecektir. Aramak istediğiniz başlığı girin ve `Enter` tuşuna basın.
     
-4. Kod, arama sonuçlarını alacak, sayfa sayısını belirleyecek ve her sayfadaki içerikleri toplayarak `eksi_sozluk.csv` dosyasına kaydedecektir.
+4. Kod, arama sonuçlarını alacak, sayfa sayısını belirleyecek ve her sayfadaki içerikleri(başlık, içerik, tarih) toplayarak `yazar.csv` dosyasına kaydedecektir.
