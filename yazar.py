@@ -45,9 +45,9 @@ browser.get(url)
 unique_entries = set()
 
 # CSV dosyasını oluştur ve başlıkları yaz
-with open('eksi_yazar_entry.csv', mode='w', newline='', encoding='utf-8-sig') as file:
+with open('yazar.csv', mode='w', newline='', encoding='utf-8-sig') as file:
     writer = csv.writer(file, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-    writer.writerow(["İçerik"])  # Sadece içerik başlığı
+    writer.writerow(["Başlık", "İçerik", "Tarih"])  # Başlık, İçerik, Tarih başlıkları
 
     while True:
         # Sayfanın yüklenmesini bekle
@@ -62,13 +62,20 @@ with open('eksi_yazar_entry.csv', mode='w', newline='', encoding='utf-8-sig') as
         for entry in entry_divs:
             content = entry.text.strip()
             content = html.unescape(content)  # HTML karakterlerini düzelt
+
+            # Başlık ve tarih bilgilerini al
+            header_tag = entry.find_previous("a", {"itemprop": "url"})
+            title = header_tag.find("span", {"itemprop": "name"}).text.strip() if header_tag else "Başlık bulunamadı"
+
+            date_tag = entry.find_next("a", {"class": "entry-date permalink"})
+            date = date_tag.text.strip() if date_tag else "Tarih bulunamadı"
             
-            # İstenmeyen ifadeleri filtrele (örneğin "görsel") ve tekrarlı entry'leri kontrol et
+            # İstenmeyen ifadeleri filtrele ve tekrarlı entry'leri kontrol et
             if "görsel" not in content.lower() and content not in unique_entries:
                 unique_entries.add(content)  # Yeni entry'yi sete ekle
-                print(content)  # İçeriği yazdır
+                print(f"Başlık: {title}\nİçerik: {content}\nTarih: {date}")
                 print("*" * 100)
-                writer.writerow([content])  # CSV dosyasına yaz
+                writer.writerow([title, content, date])  # CSV dosyasına yaz
 
         try:
             # "Daha fazla göster" butonunu bul ve tıkla
@@ -82,4 +89,3 @@ with open('eksi_yazar_entry.csv', mode='w', newline='', encoding='utf-8-sig') as
 
 # Tarayıcıyı kapat
 browser.close()
-
