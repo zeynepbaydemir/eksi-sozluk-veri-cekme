@@ -1,13 +1,22 @@
-import time
 import csv
+import time
 import html
+import re
+
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
+def extract_year(date_string):
+    match = re.search(r'\d{2}\.\d{2}\.(\d{4})', date_string)
+    if match:
+        return match.group(1)
+    return None
+
+
 # Başlığı kullanıcıdan al
 baslik = input("hangi başlığı aramak istiyorsunuz?\n")
-
+fileName = baslik.replace(" ","_")
 url = "https://eksisozluk.com/"
 
 # Selenium ile tarayıcıyı başlat
@@ -51,9 +60,9 @@ except:
 print(f"Toplam sayfa sayısı: {page_count}")
 
 # CSV dosyasını oluştur ve başlıkları yaz
-with open('eksi_sozluk.csv', mode='w', newline='', encoding='utf-8-sig') as file:
-    writer = csv.writer(file)
-    writer.writerow(["İçerik"])  # Sadece içerik başlığı
+with open(f'{fileName}.csv', mode='w', newline='', encoding='utf-8-sig') as file:
+    writer = csv.writer(file, quoting=csv.QUOTE_ALL)
+    writer.writerow(["İçerik","Tarih","Yıl"])  # İçerik ve tarih başlıkları
 
     # Her sayfa için içerikleri al
     for i in range(1, page_count + 1):
@@ -64,12 +73,18 @@ with open('eksi_sozluk.csv', mode='w', newline='', encoding='utf-8-sig') as file
         soup = BeautifulSoup(source, "html.parser")
         
         entry_divs = soup.find_all("div", {"class": "content"})
-        for entry in entry_divs:
+        dates = soup.find_all("a", {"class": "entry-date permalink"})
+        
+        for entry, date in zip(entry_divs, dates):
             content = entry.text.strip()
             content = html.unescape(content)  # HTML karakterlerini düzelt
-            print(content)  # İçeriği yazdır
+            date_text = date.text.strip()
+            date_text = html.unescape(date_text)  # HTML karakterlerini düzelt
+            year = extract_year(date_text)
+            print(f"İçerik: {content}")
+            print(f"Tarih: {date_text}")
             print("*" * 100)
-            writer.writerow([content])  # CSV dosyasına yaz
+            writer.writerow([content, date_text,year])  # CSV dosyasına içerik ve tarih yaz
 
 # Tarayıcıyı kapat
 browser.close()
